@@ -1,16 +1,9 @@
-# RoHangout Redirect Link
-*This is for educational purposes*
-**Just a link to bring you to RoHangout.com.**
+# WAICY WoundAssist - RoHangout
+This is for the WAICY Competition 2023.
+**This is the uploaded Project**
 
+- AI and coaching by Saud Darwish
+- Website hosting by Saud Darwish also
+(basically this AI and webpage is by Saud Darwish)
 
-
-
-
-Data/Information
-IP Address, user agent and device information.
-
-Content is static and contains iframes.
-#   Sole Document
-
-This link does not damage or harm the device in anyway.
-done.
+**enjoy!**
