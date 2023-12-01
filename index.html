@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-<div>Teachable Machine Image Model</div>
-<button
- 
-type="button"
- 
-onclick="init()";>Start</button>
-
-<div
- 
-id="webcam-container"></div>
-
-<div
- 
-id="label-container"></div>
-
-<script
- 
-src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-
-<script
- 
-src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+!DOCTYPE html>
+<div>Wound Assist AI</div>
+<button type="button" onclick="init()">Start</button>
+<div id="webcam-container"></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 <script type="text/javascript">
   // More API functions here:
   // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
@@ -39,32 +18,33 @@ src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablem
 
   // Load the image model and setup the webcam
   async function init() {
-    if (first == true){
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+    if(first == true){
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // or files from your local hard drive
-        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+      // load the model and metadata
+      // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+      // or files from your local hard drive
+      // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+      model = await tmImage.load(modelURL, metadataURL);
+      maxPredictions = model.getTotalClasses();
 
-        // Convenience function to setup a webcam
-        const flip = true; // whether to flip the webcam
-        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-        await webcam.setup(); // request access to the webcam
-        await webcam.play();
-        window.requestAnimationFrame(loop);
+      // Convenience function to setup a webcam
+      const flip = true; // whether to flip the webcam
+      webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+      await webcam.setup(); // request access to the webcam
+      await webcam.play();
+      window.requestAnimationFrame(loop);
 
-        // append elements to the DOM
-        document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
-        first = false;
-  } }
+      // append elements to the DOM
+      document.getElementById("webcam-container").appendChild(webcam.canvas);
+      labelContainer = document.getElementById("label-container");
+      for (let i = 0; i < maxPredictions; i++) { // and class labels
+        labelContainer.appendChild(document.createElement("div"));
+      }
+      first = false;
+    }
+  }
 
   async function loop() {
     webcam.update(); // update the webcam frame
@@ -74,21 +54,24 @@ src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablem
 
   // run the webcam image through the image model
   async function predict() {
-    // predict can take in an image, video or canvas html element
     const prediction = await model.predict(webcam.canvas);
     let maxProbability = 0;
     let maxPredictionClass = "";
+    let firstClass = prediction[0].className;
+    let secondClass = prediction[1].className;
+    let thirdClass = prediction[2].className;
+    let fourthClass = prediction[3].className;
+    let fifthClass = prediction[4].className;
+    let sixthClass = prediction[5].className;
+
     for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+
       if (prediction[i].probability > maxProbability) {
         maxProbability = prediction[i].probability;
         maxPredictionClass = prediction[i].className;
       }
-    }
-    const highestPrediction = document.createElement("div");
-    highestPrediction.innerHTML = `${maxPredictionClass}`;
-    labelContainer.removeChild(labelContainer.lastChild);
-    labelContainer.appendChild(highestPrediction);
-  }
 </script>
 
 </body>
