@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <div>Wound Assist AI</div>
 <button type="button" onclick="init()">Start</button>
 <div id="webcam-container"></div>
@@ -72,7 +72,35 @@
         maxProbability = prediction[i].probability;
         maxPredictionClass = prediction[i].className;
       }
+  }
+
+  const display = document.createElement("div");
+
+  if (firstClass === maxPredictionClass) {
+    display.innerHTML = `You have a mild cut on your finger. Apply alcohol or soap then wipe the wound clean, finaly put a bandaid on the cut`;
+  }
+  if (secondClass === maxPredictionClass) {
+    display.innerHTML = `You have a mild cut on your arm or leg. Apply alcohol then put a bandaid on the wounded area`;
+  }
+  if (thirdClass === maxPredictionClass) {
+    display.innerHTML = `You have a bruise. Wrap an icepack in a towel then apply it on the bruise`;
+  }
+  if (fourthClass === maxPredictionClass) {
+    display.innerHTML = `You have a severe cut on your finger. Apply alcohol then wipe the wound clean, finaly put a bandaid on the cut`;
+  }
+  if (fifthClass === maxPredictionClass) {
+    display.innerHTML = `You have a severe wound on your arm or leg. Apply alcohol then wipe the wound, wrap your wound in towel and apply pressure`;
+  }
+  if (sixthClass === maxPredictionClass) {
+    display.innerHTML = `There is no wound detected`;
+  }
+
+  
+  labelContainer.removeChild(labelContainer.lastChild);
+  labelContainer.appendChild(display);
+}
 </script>
+
 
 </body>
 </html>
